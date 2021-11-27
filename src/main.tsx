@@ -1,16 +1,15 @@
+import { animated, config, useSpring } from '@react-spring/three'
+import { OrbitControls } from '@react-three/drei'
 import { events, render, useFrame, useThree } from '@react-three/fiber'
+import { useControls } from 'leva'
 import { Suspense, useRef, useState } from 'react'
 import * as THREE from 'three'
-import { useSpring, animated, config } from '@react-spring/three'
-import { useControls } from "leva";
 
 import { Effects } from './effects'
-
-import Sphere from './Sphere'
-import { OrbitControls } from '@react-three/drei'
+import Sphere from './models/sphere'
 
 function Box(props: JSX.IntrinsicElements['mesh']) {
-  const ref = useRef<THREE.Mesh>(null!)
+  const ref = useRef<THREE.Mesh>(null)
   const [hovered, hover] = useState(false)
   const [clicked, click] = useState(false)
   const { scale } = useSpring({ scale: hovered ? 1.2 : 1, config: config.wobbly })
@@ -24,6 +23,7 @@ function Box(props: JSX.IntrinsicElements['mesh']) {
     ref.current.rotation.z += 0.01
   })
   return (
+    // @ts-ignore
     <animated.mesh
       {...props}
       ref={ref}
@@ -40,7 +40,7 @@ function Box(props: JSX.IntrinsicElements['mesh']) {
 
 const Env = () => {
   const { background } = useControls({
-    background: "#0a0a0a"
+    background: '#0a0a0a'
   })
   const { scene } = useThree()
   scene.background = new THREE.Color(background)
@@ -58,7 +58,7 @@ const Root = () => {
     power: {
       value: 512,
       min: 0,
-      max: 10000,
+      max: 10000
     },
     effectsActive: true
   })
